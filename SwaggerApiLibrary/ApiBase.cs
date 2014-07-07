@@ -60,6 +60,13 @@ namespace Swagger
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(result);
         }
+        public static async Task<T> PutForm<T>(string basePath, string url, Dictionary<string, string> content, string contentType = "application/x-www-form-urlencoded")
+        {
+            var httpClient = CreateClient(basePath, contentType);
+            var response = await httpClient.PostAsync(url, new FormUrlEncodedContent(content));
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(result);
+        }
         public static async Task<T> PutRaw<T>(string basePath, string url, string content, string contentType = "application/json")
         {
             var httpClient = CreateClient(basePath, contentType);
